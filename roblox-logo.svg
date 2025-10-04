@@ -1,0 +1,39 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="robloxGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00D2FF;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#0077B6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#023E8A;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="rgba(0,0,0,0.3)"/>
+    </filter>
+  </defs>
+  
+  <!-- Main Roblox Square -->
+  <rect x="128" y="128" width="256" height="256" rx="32" ry="32" 
+        fill="url(#robloxGradient)" 
+        transform="rotate(20 256 256)"
+        filter="url(#shadow)"
+        stroke="rgba(255,255,255,0.2)" 
+        stroke-width="2"/>
+  
+  <!-- Inner Square Hole -->
+  <rect x="192" y="192" width="128" height="128" rx="16" ry="16" 
+        fill="#ffffff" 
+        transform="rotate(20 256 256)"
+        opacity="0.9"/>
+  
+  <!-- Highlight Effect -->
+  <rect x="128" y="128" width="256" height="64" rx="32" ry="32" 
+        fill="url(#highlight)" 
+        transform="rotate(20 256 256)"
+        opacity="0.3"/>
+  
+  <defs>
+    <linearGradient id="highlight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.5" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
+    </linearGradient>
+  </defs>
+</svg>
