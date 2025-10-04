@@ -19,6 +19,11 @@ Disallow: /
 User-agent: WebZIP
 Disallow: /
 
+User-agent: *
+Allow: /
+Sitemap: https://claimzone.tech/sitemap.xml
+
+
 User-agent: SiteSnagger
 Disallow: /
 
@@ -44,4 +49,5 @@ Allow: /terms
 # Block common bot directories
 Disallow: /cgi-bin/
 Disallow: /tmp/
+
 Disallow: /logs/
