@@ -1,7 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
+    <!-- AGGRESSIVE URL CLEANER - Multiple attempts -->
+    <script>
+    (function() {
+        var cleanUrl = function() {
+            if(window.location.search.includes('lang=')) {
+                console.log('Cleaning URL:', window.location.href);
+                var u = new URL(window.location.href);
+                var p = new URLSearchParams(u.search);
+                p.delete('lang');
+                var clean = u.origin + u.pathname + (p.toString() ? '?' + p.toString() : '') + u.hash;
+                if (clean !== window.location.href) {
+                    window.history.replaceState(null, '', clean);
+                    console.log('URL cleaned to:', clean);
+                    return true;
+                }
+            }
+            return false;
+        };
+        
+        // Immediate execution
+        cleanUrl();
+        
+        // Aggressive repeated attempts
+        var attempts = 0;
+        var interval = setInterval(function() {
+            if (cleanUrl() || attempts++ > 20) {
+                clearInterval(interval);
+            }
+        }, 100);
+        
+        // Event-based attempts
+        document.addEventListener('DOMContentLoaded', cleanUrl);
+        window.addEventListener('load', cleanUrl);
+        window.addEventListener('popstate', cleanUrl);
+        
+        // Override history methods to prevent restoration
+        var originalPushState = history.pushState;
+        var originalReplaceState = history.replaceState;
+        
+        history.pushState = function() {
+            originalPushState.apply(history, arguments);
+            setTimeout(cleanUrl, 0);
+        };
+        
+        history.replaceState = function() {
+            originalReplaceState.apply(history, arguments);
+            setTimeout(cleanUrl, 0);
+        };
+    })();
+    </script>
 
 <!-- removed old pagelocked locker noscript and loader -->
 
@@ -50,57 +99,7 @@
 
   gtag('config', 'G-0CQ7964MXY');
 </script>
-    <!-- Script to remove lang parameter from URL -->
-    <script>
-    // Remove lang query parameter from URL without reloading the page
-    function removeLangParameter() {
-        try {
-            const currentUrl = window.location.href;
-            console.log('Current URL:', currentUrl);
-            
-            // Check if URL has lang parameter
-            if (currentUrl.includes('lang=')) {
-                const url = new URL(currentUrl);
-                const params = new URLSearchParams(url.search);
-                
-                console.log('Found lang parameter:', params.get('lang'));
-                
-                // Remove the lang parameter
-                params.delete('lang');
-                
-                // Reconstruct the URL
-                let newUrl = url.protocol + '//' + url.host + url.pathname;
-                if (params.toString()) {
-                    newUrl += '?' + params.toString();
-                }
-                if (url.hash) {
-                    newUrl += url.hash;
-                }
-                
-                console.log('New URL:', newUrl);
-                
-                // Update the URL without reloading the page
-                window.history.replaceState({}, document.title, newUrl);
-                
-                console.log('Successfully removed lang parameter from URL');
-            }
-        } catch (error) {
-            console.error('Error removing lang parameter:', error);
-        }
-    }
-    
-    // Run immediately
-    removeLangParameter();
-    
-    // Run when DOM is loaded
-    document.addEventListener('DOMContentLoaded', removeLangParameter);
-    
-    // Run when page is fully loaded
-    window.addEventListener('load', removeLangParameter);
-    
-    // Also run when the URL changes (for SPAs)
-    window.addEventListener('popstate', removeLangParameter);
-    </script>
+
 
     <!-- Script to block cookie consent dialog -->
     <script>
