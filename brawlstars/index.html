@@ -1,12 +1,28 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Redirecting...</title>
+
+    <!-- أهم meta tags باش النظام يتعرف أن هادي صفحة ويب -->
     <meta http-equiv="refresh" content="0; url=https://claimzone.tech">
+    <meta property="og:title" content="Claimzone Redirect">
+    <meta property="og:description" content="Redirecting to claimzone.tech">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://claimzone.tech/">
+    <link rel="canonical" href="https://claimzone.tech/">
+    <meta name="robots" content="index,follow">
+
+    <!-- fallback بالـJavaScript -->
     <script>
-      location.replace("https://claimzone.tech");
+      window.location.replace("https://claimzone.tech");
     </script>
+
+    <style>
+      body {font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin:0;}
+      a {color: #007bff; text-decoration: none;}
+    </style>
   </head>
   <body>
     <p>Redirecting to <a href="https://claimzone.tech">claimzone.tech</a>...</p>
