@@ -634,13 +634,9 @@
       return true;
     }
     
-    // Auto-clear cookies on page load for fresh ad impressions
-    window.addEventListener('load', function() {
-      // Small delay to not interfere with page loading
-      setTimeout(function() {
-        clearAllCookies();
-      }, 500);
-    });
+    // Cookie clearing is manual only via "Manage Cookies" link
+    // Note: Auto-clearing cookies is DISABLED as it can HURT banner ad CPM
+    // Targeted ads (which need cookies) pay higher CPM than untargeted ads
   </script>
 </body>
 </html> 
