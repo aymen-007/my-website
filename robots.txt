@@ -1,0 +1,61 @@
+# Robots.txt for claimzone.tech
+# Last updated: 2026-01-07
+
+# Allow all search engines to crawl everything
+User-agent: *
+Allow: /
+Disallow:
+
+# Google Bot - Full access
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Google Image Bot - Allow images
+User-agent: Googlebot-Image
+Allow: /
+
+# Bing Bot
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Yandex Bot
+User-agent: Yandex
+Allow: /
+Crawl-delay: 1
+
+# Baidu Bot (Chinese search engine)
+User-agent: Baiduspider
+Allow: /
+
+# DuckDuckGo Bot
+User-agent: DuckDuckBot
+Allow: /
+
+# Facebook crawler (for link previews)
+User-agent: facebookexternalhit
+Allow: /
+
+# Twitter crawler (for card previews)
+User-agent: Twitterbot
+Allow: /
+
+# Block bad bots that waste bandwidth
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Sitemap location
+Sitemap: https://claimzone.tech/sitemap.xml
+
+# Host directive (preferred domain)
+Host: https://claimzone.tech
