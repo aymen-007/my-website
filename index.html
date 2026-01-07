@@ -488,6 +488,9 @@
         var container = document['getElementById']('promo-container');
         if (!container) return;
         
+        // Check if already loaded
+        if (container.querySelector('iframe') || container.querySelector('script')) return;
+        
         // Set options with random variable name
         window['atOptions'] = {
           'key': _0x.k,
